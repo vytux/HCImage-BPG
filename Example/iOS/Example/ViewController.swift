@@ -9,13 +9,15 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet private weak var imageView: UIImageView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let data = NSData(contentsOfFile: NSBundle.mainBundle().pathForResource("sample", ofType: "bpg")!)!
-        self.imageView?.image = UIImage(BPGData: data)
+        self.imageView?.image = NSBundle.mainBundle()
+            .pathForResource("sample", ofType: "bpg")
+            .flatMap { NSData(contentsOfFile: $0) }
+            .flatMap { UIImage(BPGData: $0) }
     }
 }
 
